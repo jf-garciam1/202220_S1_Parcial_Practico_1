@@ -44,6 +44,7 @@ class HotelHabitacionServiceTest {
     private PodamFactory factory = new PodamFactoryImpl();
 
     private List<HotelEntity> hotelList = new ArrayList<>();
+    private List<HabitacionEntity> habitacionList = new ArrayList<>();
 
 
             /**
@@ -75,7 +76,16 @@ class HotelHabitacionServiceTest {
                 entityManager.persist(hotelEntity);
                 hotelList.add(hotelEntity);
             }
+        for (int i = 0; i < 3; i++) {
+                HabitacionEntity habitacionEntity = factory.manufacturePojo( HabitacionEntity.class);
+                entityManager.persist(habitacionEntity);
+                habitacionList.add(habitacionEntity);
+            }
 
+            
+
+          
+    }
             
 
           
@@ -85,16 +95,18 @@ class HotelHabitacionServiceTest {
 	 * Prueba para crear un hotel
 	 */
 	@Test
-	void testCreateHotel() throws EntityNotFoundException, IllegalOperationException {
-		HotelEntity newEntity = factory.manufacturePojo(HotelEntity.class);
-		HotelEntity result = hotelService.createhotel(newEntity);
-		assertNotNull(result);
-		HotelEntity entity = entityManager.find(HotelEntity.class, result.getId());
-		assertEquals(newEntity.getId(), entity.getId());
-		assertEquals(newEntity.getNombre(), entity.getNombre());
-		assertEquals(newEntity.getDireccion(), entity.getDireccion());
-		assertEquals(newEntity.getNumestrellas(), entity.getNumestrellas());
-
-      
+	void testAddHotelHabitacion() throws EntityNotFoundException, IllegalOperationException {
+		HotelEntity newHotel = factory.manufacturePojo (HotelEntity.class);
+		entityManager.persist(newHotel);
+		
+		HabitacionEntity habitacion = factory.manufacturePojo(HabitacionEntity.class);
+		entityManager.persist(habitacion);
+		
+        hotelhabitacionService.addHotelHabitacion(newHotel.getId(),habitacion.getId());
+        
+		List < HabitacionEntity >  persistenceHabitacions = hotelhabitacionService.getHabitacions(newHotel.getId());
+		assertEquals(newHotel.getHabitacion().get(0), persistenceHabitacion.get(0));
+        assertEquals(newHotel.getHabitacion().get(1), persistenceHabitacions.get(1));
+        
 	}
-}
+
