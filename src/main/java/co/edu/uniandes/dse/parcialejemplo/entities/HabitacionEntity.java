@@ -27,10 +27,10 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Setter
 public class HabitacionEntity extends BaseEntity {
 	private Long id;
-    private String personasxhab;
-    private String numid;
-    private String numcamas;
-    private String numbaños;
+    private Integer personasxhab;
+    private Integer numid;
+    private Integer numcamas;
+    private Integer numbaños;
     
     
     @PodamExclude
